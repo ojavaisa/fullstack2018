@@ -1,66 +1,61 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Otsikko = (props) => {
+const Otsikko = () => {
     return (
         <div>
-            <h1>{props.kurssi.nimi}</h1>
+            <h1>Anna palautetta</h1>
         </div>
     )
 }
 
-const Sisalto = (props) => {
+const Statistiikka = (props) => {
     return (
         <div>
-            <Osa osa = {props.kurssi.osat[0]} />
-            <Osa osa = {props.kurssi.osat[1]} />
-            <Osa osa = {props.kurssi.osat[2]} />
+            <h1>Statistiikka</h1>
+            Hyvä {props.tila.hyva} <br />
+            Neutraali {props.tila.neutraali} <br />
+            Huono {props.tila.huono}
         </div>
     )
 }
 
-const Osa = (props) => {
-    return (
-        <div>
-            <p>{props.osa.nimi} {props.osa.tehtavia}</p>
-        </div>
-    )
-}
-
-const Yhteensa = (props) => {
-    return (
-        <div>
-            <p>yhteensä {props.kurssi.osat[0].tehtavia + props.kurssi.osat[1].tehtavia + props.kurssi.osat[2].tehtavia} tehtävää</p>
-        </div>
-    )
-}
-
-const App = () => {
-    const kurssi = {
-        nimi: 'Half Stack -sovelluskehitys',
-        osat: [
-            {
-                nimi: 'Reactin perusteet',
-                tehtavia: 10
-            },
-            {
-                nimi: 'Tiedonvälitys propseilla',
-                tehtavia: 7
-            },
-            {
-                nimi: 'Komponenttien tila',
-                tehtavia: 14
-            }
-        ]
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            hyva: 0,
+            huono: 0,
+            neutraali: 0
+        }
     }
 
-    return (
-        <div>
-            <Otsikko kurssi = {kurssi} />
-            <Sisalto kurssi = {kurssi} />
-            <Yhteensa kurssi = {kurssi} />
-        </div>
-    )
+    hyvaPalaute = () => {
+        console.log('hyva palaute')
+        this.setState({hyva: this.state.hyva+1})
+    }
+
+    neutraaliPalaute = () => {
+        console.log('neutraali palaute')
+        this.setState({neutraali: this.state.neutraali+1})
+    }
+
+    huonoPalaute = () => {
+        console.log('huono palaute')
+        this.setState({huono: this.state.huono+1})
+    }
+
+    render(){
+        return (
+            <div>
+                <Otsikko />
+                <button onClick={this.hyvaPalaute}>Hyvä</button>
+                <button onClick={this.neutraaliPalaute}>Neutraali</button>
+                <button onClick={this.huonoPalaute}>Huono</button>
+                <Statistiikka tila = {this.state} />
+            </div>
+        )
+    }
 }
 
 ReactDOM.render(
