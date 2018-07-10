@@ -1,29 +1,40 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Otsikko = () => {
+const Title = () => (
+    <div>
+        <h1>Anna palautetta</h1>
+    </div>
+)
+
+const Statistics = (props) => {
+    const lkm = (props.state.hyva + props.state.huono + props.state.neutraali)*1.0
+    const ka = (props.state.hyva*1.0 + props.state.huono*(-1.0)) / lkm
+    const pos = (props.state.hyva*1.0 / lkm) * 100.0
+    const pos_pros = pos + " %"
     return (
         <div>
-            <h1>Anna palautetta</h1>
+            <h1>Statistiikka</h1>
+            <Statistic text="Hyvä" stat={props.state.hyva} />
+            <Statistic text="Neutraali" stat={props.state.neutraali} />
+            <Statistic text="Huono" stat={props.state.huono} />
+            <Statistic text="Keskiarvo" stat={ka} />
+            <Statistic text="Positiivisia" stat={pos_pros} />
         </div>
     )
 }
 
-const Statistiikka = (props) => {
-    const lkm = (props.state.hyva + props.state.huono + props.state.neutraali)*1.0
-    const ka = (props.state.hyva*1.0 + props.state.huono*(-1.0)) / lkm
-    const pos = (props.state.hyva*1.0 / lkm) * 100.0
-    return (
-        <div>
-            <h1>Statistiikka</h1>
-            Hyvä {props.state.hyva} <br />
-            Neutraali {props.state.neutraali} <br />
-            Huono {props.state.huono} <br />
-            Keskiarvo {ka} <br />
-            Positiivisia {pos} %
-        </div>
-    )
-}
+const Statistic = ({text, stat}) => (
+    <div>
+        {text} {stat} <br />
+    </div>
+)
+
+const Button = ({handleClick, text}) => (
+    <button onClick={handleClick}>
+        {text}
+    </button>
+)
 
 class App extends React.Component {
     constructor(props) {
@@ -36,28 +47,28 @@ class App extends React.Component {
     }
 
     hyvaPalaute = () => {
-        console.log('hyva palaute')
+        // console.log('hyva palaute')
         this.setState({hyva: this.state.hyva+1})
     }
 
     neutraaliPalaute = () => {
-        console.log('neutraali palaute')
+        // console.log('neutraali palaute')
         this.setState({neutraali: this.state.neutraali+1})
     }
 
     huonoPalaute = () => {
-        console.log('huono palaute')
+        // console.log('huono palaute')
         this.setState({huono: this.state.huono+1})
     }
 
     render(){
         return (
             <div>
-                <Otsikko />
-                <button onClick={this.hyvaPalaute}>Hyvä</button>
-                <button onClick={this.neutraaliPalaute}>Neutraali</button>
-                <button onClick={this.huonoPalaute}>Huono</button>
-                <Statistiikka state = {this.state} />
+                <Title />
+                <Button handleClick={this.hyvaPalaute} text="Hyvä" />
+                <Button handleClick={this.neutraaliPalaute} text="Neutraali" />
+                <Button handleClick={this.huonoPalaute} text="Huono" />
+                <Statistics state={this.state} />
             </div>
         )
     }
