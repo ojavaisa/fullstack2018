@@ -10,12 +10,17 @@ const Otsikko = () => {
 }
 
 const Statistiikka = (props) => {
+    const lkm = (props.state.hyva + props.state.huono + props.state.neutraali)*1.0
+    const ka = (props.state.hyva*1.0 + props.state.huono*(-1.0)) / lkm
+    const pos = (props.state.hyva*1.0 / lkm) * 100.0
     return (
         <div>
             <h1>Statistiikka</h1>
-            Hyvä {props.tila.hyva} <br />
-            Neutraali {props.tila.neutraali} <br />
-            Huono {props.tila.huono}
+            Hyvä {props.state.hyva} <br />
+            Neutraali {props.state.neutraali} <br />
+            Huono {props.state.huono} <br />
+            Keskiarvo {ka} <br />
+            Positiivisia {pos} %
         </div>
     )
 }
@@ -52,7 +57,7 @@ class App extends React.Component {
                 <button onClick={this.hyvaPalaute}>Hyvä</button>
                 <button onClick={this.neutraaliPalaute}>Neutraali</button>
                 <button onClick={this.huonoPalaute}>Huono</button>
-                <Statistiikka tila = {this.state} />
+                <Statistiikka state = {this.state} />
             </div>
         )
     }
