@@ -1,6 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const Anecdote = (props) => {
+    return (
+        <div>
+            {props.anecdotes[props.state.selected]} <br />
+            This anecdote has {props.state.votes[props.state.selected]} votes
+        </div>
+    )
+}
+
 const Button = ({handleClick, text}) => (
     <button onClick={handleClick}>
         {text}
@@ -11,22 +20,31 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: 0
+            selected: 0,
+            votes: new Array(this.props.anecdotes.length).fill(0)
         }
     }
 
     randomQuote = () => {
         const len = anecdotes.length
         const rand = Math.floor(Math.random() * len)
-        console.log(len, rand)
+        
         this.setState({selected: rand})
+    }
+
+    voteSelected = () => {
+        const temp = [...this.state.votes]
+        temp[this.state.selected] += 1
+
+        this.setState({votes: temp})
     }
 
     render() {
         return (
             <div>
-                {this.props.anecdotes[this.state.selected]} <br />
+                <Anecdote anecdotes={this.props.anecdotes} state={this.state} />
                 <Button handleClick={this.randomQuote} text="Next anecdote"/>
+                <Button handleClick={this.voteSelected} text="Vote this one"/>
             </div>
         )
     }
