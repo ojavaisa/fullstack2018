@@ -17,11 +17,15 @@ const Statistics = (props) => {
         return (
             <div>
                 <h1>Statistiikka</h1>
-                <Statistic text="Hyvä" stat={props.state.hyva} />
-                <Statistic text="Neutraali" stat={props.state.neutraali} />
-                <Statistic text="Huono" stat={props.state.huono} />
-                <Statistic text="Keskiarvo" stat={ka} />
-                <Statistic text="Positiivisia" stat={pos_pros} />
+                <table>
+                    <tbody>
+                        <Statistic text="Hyvä" stat={props.state.hyva} />
+                        <Statistic text="Neutraali" stat={props.state.neutraali} />
+                        <Statistic text="Huono" stat={props.state.huono} />
+                        <Statistic text="Keskiarvo" stat={ka} />
+                        <Statistic text="Positiivisia" stat={pos_pros} />
+                    </tbody>
+                </table>
             </div>
         )
     } else {
@@ -35,9 +39,7 @@ const Statistics = (props) => {
 }
 
 const Statistic = ({text, stat}) => (
-    <div>
-        {text} {stat} <br />
-    </div>
+    <tr><td>{text}</td><td>{stat}</td></tr>
 )
 
 const Button = ({handleClick, text}) => (
@@ -56,24 +58,9 @@ class App extends React.Component {
         }
     }
 
-    /* hyvaPalaute = () => {
-        // console.log('hyva palaute')
-        this.setState({hyva: this.state.hyva+1})
-    }
-
-    neutraaliPalaute = () => {
-        // console.log('neutraali palaute')
-        this.setState({neutraali: this.state.neutraali+1})
-    }
-
-    huonoPalaute = () => {
-        // console.log('huono palaute')
-        this.setState({huono: this.state.huono+1})
-    } */
-
     feedbackHandler = (feedback) => {
         return () => {
-            console.log('palaute: ', feedback)
+            // console.log('palaute: ', feedback)
             this.setState({[feedback]: this.state[feedback]+1})
         }
     }
