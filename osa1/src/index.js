@@ -5,7 +5,19 @@ const Anecdote = (props) => {
     return (
         <div>
             {props.anecdotes[props.state.selected]} <br />
-            This anecdote has {props.state.votes[props.state.selected]} votes
+            This anecdote has {props.state.votes[props.state.selected]} votes.
+        </div>
+    )
+}
+
+const Best = (props) => {
+    const best = Math.max(...props.votes)
+    const ind = props.votes.indexOf(best)
+    return (
+        <div>
+            <h1>Anecdote with most wotes:</h1>
+            {props.anecdotes[ind]} <br />
+            This anecdote has {best} votes.
         </div>
     )
 }
@@ -45,6 +57,7 @@ class App extends React.Component {
                 <Anecdote anecdotes={this.props.anecdotes} state={this.state} />
                 <Button handleClick={this.randomQuote} text="Next anecdote"/>
                 <Button handleClick={this.voteSelected} text="Vote this one"/>
+                <Best votes={this.state.votes} anecdotes={this.props.anecdotes} />
             </div>
         )
     }
