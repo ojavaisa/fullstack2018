@@ -6,7 +6,7 @@ const Otsikko = (props) => {
         <div>
             <h1>{props.kurssi.nimi}</h1>
         </div>
-    )
+    ) 
 }
 
 const Sisalto = (props) => {
