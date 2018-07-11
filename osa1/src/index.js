@@ -12,16 +12,26 @@ const Statistics = (props) => {
     const ka = (props.state.hyva*1.0 + props.state.huono*(-1.0)) / lkm
     const pos = (props.state.hyva*1.0 / lkm) * 100.0
     const pos_pros = pos + " %"
-    return (
-        <div>
-            <h1>Statistiikka</h1>
-            <Statistic text="Hyvä" stat={props.state.hyva} />
-            <Statistic text="Neutraali" stat={props.state.neutraali} />
-            <Statistic text="Huono" stat={props.state.huono} />
-            <Statistic text="Keskiarvo" stat={ka} />
-            <Statistic text="Positiivisia" stat={pos_pros} />
-        </div>
-    )
+
+    if (lkm > 0) {
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                <Statistic text="Hyvä" stat={props.state.hyva} />
+                <Statistic text="Neutraali" stat={props.state.neutraali} />
+                <Statistic text="Huono" stat={props.state.huono} />
+                <Statistic text="Keskiarvo" stat={ka} />
+                <Statistic text="Positiivisia" stat={pos_pros} />
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                Ei yhtään palautetta annettu
+            </div>
+        )
+    }
 }
 
 const Statistic = ({text, stat}) => (
