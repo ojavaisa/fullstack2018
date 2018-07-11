@@ -56,7 +56,7 @@ class App extends React.Component {
         }
     }
 
-    hyvaPalaute = () => {
+    /* hyvaPalaute = () => {
         // console.log('hyva palaute')
         this.setState({hyva: this.state.hyva+1})
     }
@@ -69,15 +69,22 @@ class App extends React.Component {
     huonoPalaute = () => {
         // console.log('huono palaute')
         this.setState({huono: this.state.huono+1})
+    } */
+
+    feedbackHandler = (feedback) => {
+        return () => {
+            console.log('palaute: ', feedback)
+            this.setState({[feedback]: this.state[feedback]+1})
+        }
     }
 
     render(){
         return (
             <div>
                 <Title />
-                <Button handleClick={this.hyvaPalaute} text="Hyvä" />
-                <Button handleClick={this.neutraaliPalaute} text="Neutraali" />
-                <Button handleClick={this.huonoPalaute} text="Huono" />
+                <Button handleClick={this.feedbackHandler("hyva")} text="Hyvä" />
+                <Button handleClick={this.feedbackHandler("neutraali")} text="Neutraali" />
+                <Button handleClick={this.feedbackHandler("huono")} text="Huono" />
                 <Statistics state={this.state} />
             </div>
         )
